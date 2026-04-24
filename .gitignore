@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local environment
+.env
+.env.local
+
+# Temporary test files
+test_tesseract.js
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Vite cache
+.vite/

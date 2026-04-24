@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Antigravity OCR | Premium Document Scanning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+    <!-- ===== LOGIN GATE ===== -->
+    <div id="login-gate" style="
+      position: fixed; inset: 0; z-index: 99999;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #fff1f0 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Inter', system-ui, sans-serif;
+    ">
+      <!-- Animated Background Orbs -->
+      <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;">
+        <div style="position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(227,49,36,0.08) 0%,transparent 70%);top:-200px;left:-200px;animation:orb-float 8s ease-in-out infinite;"></div>
+        <div style="position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(227,49,36,0.06) 0%,transparent 70%);bottom:-100px;right:-100px;animation:orb-float 12s ease-in-out infinite reverse;"></div>
+      </div>
+
+      <!-- Login Card -->
+      <div id="login-card" style="
+        position: relative;
+        background: rgba(255,255,255,0.9);
+        border: 1px solid rgba(0,0,0,0.06);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border-radius: 24px;
+        padding: 3rem 3.5rem;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.05);
+        animation: card-in 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+      ">
+        <!-- Logo -->
+        <div style="text-align:center; margin-bottom: 2.5rem;">
+          <div style="
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, #e33124, #ff6b5a);
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(227,49,36,0.4);
+            margin-bottom: 1.25rem;
+            font-size: 1.8rem;
+          ">🔍</div>
+          <h1 style="color:#1e293b; font-size:1.6rem; font-weight:800; margin:0; letter-spacing:-0.5px;">YeeLee OCR</h1>
+          <p style="color:#64748b; font-size:0.85rem; margin:0.4rem 0 0;">Enterprise Document Intelligence</p>
+        </div>
+
+        <!-- Form -->
+        <div style="display:flex; flex-direction:column; gap:1.25rem;">
+          <!-- User ID -->
+          <div>
+            <label style="display:block; color:#64748b; font-size:0.75rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:0.6rem;">User ID</label>
+            <input id="login-user" type="text" placeholder="Enter your user ID" autocomplete="username" style="
+              width:100%; box-sizing:border-box;
+              background:#f8fafc;
+              border:1px solid #e2e8f0;
+              border-radius:12px;
+              padding:0.85rem 1.1rem;
+              color:#1e293b; font-size:0.95rem; font-family:inherit;
+              outline:none; transition:all 0.2s;
+            " onfocus="this.style.borderColor='rgba(227,49,36,0.7)'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(227,49,36,0.12)'" onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'">
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label style="display:block; color:#64748b; font-size:0.75rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:0.6rem;">Password</label>
+            <input id="login-pass" type="password" placeholder="Enter your password" autocomplete="current-password" style="
+              width:100%; box-sizing:border-box;
+              background:#f8fafc;
+              border:1px solid #e2e8f0;
+              border-radius:12px;
+              padding:0.85rem 1.1rem;
+              color:#1e293b; font-size:0.95rem; font-family:inherit;
+              outline:none; transition:all 0.2s;
+            " onfocus="this.style.borderColor='rgba(227,49,36,0.7)'; this.style.background='#fff'; this.style.boxShadow='0 0 0 3px rgba(227,49,36,0.12)'" onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none'">
+          </div>
+
+          <!-- Error Message -->
+          <div id="login-error" style="
+            display:none;
+            background:rgba(239,68,68,0.15);
+            border:1px solid rgba(239,68,68,0.4);
+            border-radius:10px;
+            padding:0.7rem 1rem;
+            color:#fca5a5;
+            font-size:0.85rem;
+            text-align:center;
+          ">⚠️ Invalid User ID or Password</div>
+
+          <!-- Submit -->
+          <button id="login-btn" onclick="attemptLogin()" style="
+            width:100%;
+            background: linear-gradient(135deg, #e33124, #c4271c);
+            border:none; border-radius:12px;
+            padding:0.9rem;
+            color:#fff; font-size:1rem; font-weight:700; font-family:inherit;
+            cursor:pointer; margin-top:0.25rem;
+            box-shadow: 0 8px 24px rgba(227,49,36,0.35);
+            transition: all 0.2s ease;
+            letter-spacing:0.5px;
+          " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 32px rgba(227,49,36,0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 24px rgba(227,49,36,0.35)'">
+            Sign In →
+          </button>
+        </div>
+
+        <!-- Footer -->
+        <p style="text-align:center; color:#94a3b8; font-size:0.75rem; margin-top:2rem; margin-bottom:0;">
+          Yee Lee Corporation Bhd · Authorized Access Only
+        </p>
+      </div>
+
+      <style>
+        @keyframes card-in {
+          from { opacity:0; transform:translateY(30px) scale(0.95); }
+          to   { opacity:1; transform:translateY(0) scale(1); }
+        }
+        @keyframes orb-float {
+          0%,100% { transform:translateY(0px) rotate(0deg); }
+          50%      { transform:translateY(-30px) rotate(5deg); }
+        }
+        #login-gate.fade-out {
+          animation: gate-out 0.5s ease forwards;
+        }
+        @keyframes gate-out {
+          from { opacity:1; }
+          to   { opacity:0; pointer-events:none; }
+        }
+      </style>
+    </div>
+    <!-- ===== END LOGIN GATE ===== -->
+
+    <script>
+      // Credentials (client-side gate — for internal access control)
+      const VALID_USER = 'yeelee';
+      const VALID_PASS = '1234';
+
+      // Auto-bypass if already logged in this session
+      if (sessionStorage.getItem('ylc_auth') === 'true') {
+        document.getElementById('login-gate').style.display = 'none';
+      }
+
+      // Allow Enter key to submit
+      document.addEventListener('DOMContentLoaded', () => {
+        ['login-user','login-pass'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('keydown', e => { if(e.key === 'Enter') attemptLogin(); });
+        });
+      });
+
+      function attemptLogin() {
+        const user = document.getElementById('login-user').value.trim();
+        const pass = document.getElementById('login-pass').value;
+        const errEl = document.getElementById('login-error');
+        const btn = document.getElementById('login-btn');
+
+        if (user === VALID_USER && pass === VALID_PASS) {
+          sessionStorage.setItem('ylc_auth', 'true');
+          btn.textContent = '✓ Welcome!';
+          btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+          const gate = document.getElementById('login-gate');
+          gate.classList.add('fade-out');
+          setTimeout(() => { gate.style.display = 'none'; }, 500);
+        } else {
+          errEl.style.display = 'block';
+          const card = document.getElementById('login-card');
+          card.style.animation = 'none';
+          card.offsetHeight; // reflow
+          card.style.animation = 'shake 0.4s ease';
+          if (!document.getElementById('shake-style')) {
+            const s = document.createElement('style');
+            s.id = 'shake-style';
+            s.textContent = '@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}';
+            document.head.appendChild(s);
+          }
+        }
+      }
+    </script>
+
+    <div id="app">
+      <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="logo">
+            <span id="logo-icon"></span>
+            YeeLee OCR
+          </div>
+          
+          <div class="stats-card">
+            <h3>Queue Progress</h3>
+            <div class="value" id="queue-count">0</div>
+            <p id="queue-status">Ready for batch upload</p>
+          </div>
+
+          <div class="stats-card">
+            <h3>Processed today</h3>
+            <div class="value" id="total-processed">0</div>
+          </div>
+
+          <div style="margin-top: auto;">
+             <button id="download-all" class="btn btn-primary" style="width: 100%;" disabled>
+               <span id="download-icon"></span>
+               Download Batch
+             </button>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+          <header class="header">
+            <h1>Document Batch Processing</h1>
+            <p class="text-muted">Invoices & Supporting Documents</p>
+          </header>
+
+          <!-- Drop Zone -->
+          <div id="drop-zone" class="drop-zone">
+            <div id="upload-icon-container"></div>
+            <h3>Drag & drop documents here</h3>
+            <p>Supports Images (JPG, PNG) and PDF files</p>
+            <input type="file" id="file-input" multiple style="display: none;">
+            <input type="file" id="camera-input" accept="image/*" capture="environment" style="display: none;">
+            
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+              <button class="btn btn-outline" onclick="document.getElementById('file-input').click()">
+                Browse Files
+              </button>
+              <button class="btn btn-primary" id="btn-camera" onclick="document.getElementById('camera-input').click()">
+                <span id="camera-icon"></span>
+                Scan with Camera
+              </button>
+            </div>
+          </div>
+
+          <!-- Processing Status Banner -->
+          <div id="status-banner" style="display: none; background: var(--primary); color: white; padding: 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem; align-items: center; gap: 1rem;">
+             <span id="status-icon"></span>
+             <span id="status-text">Processing documents...</span>
+          </div>
+
+          <!-- Active Queue / Results -->
+          <div class="results-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Recent Documents</h2>
+            <div class="filters">
+               <button class="btn btn-outline btn-sm" id="clear-all">Clear All</button>
+            </div>
+          </div>
+
+          <div id="results-grid" class="results-grid">
+            <!-- Dynamic Document Cards will be inserted here -->
+            <div id="empty-state" style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-muted);">
+               <p>No documents processed yet. Upload some files to begin.</p>
+            </div>
+          </div>
+
+          <!-- Database Section -->
+          <section class="db-section" style="margin-top: 4rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+               <div>
+                  <h2>Enterprise Database</h2>
+                  <div class="view-tabs" style="display: flex; gap: 4px; margin-top: 10px;">
+                    <button id="tab-today" class="tab-btn active" onclick="switchDbTab('today')">Today's Focus</button>
+                    <button id="tab-all" class="tab-btn" onclick="switchDbTab('all')">Total History</button>
+                  </div>
+               </div>
+               <div style="display: flex; gap: 0.5rem; flex-grow: 1; max-width: 600px;">
+                  <input type="text" id="db-search" placeholder="Search Doc No or Date..." class="doc-id-input" style="flex-grow: 2;">
+                  <select id="db-filter" class="doc-id-input" style="flex-grow: 1;">
+                     <option value="all">All Categories</option>
+                     <option value="E-INVOICE">E-INVOICE</option>
+                     <option value="GOOD RETURNING NOTE">GRN</option>
+                  </select>
+                  <button id="export-csv" class="btn btn-outline btn-sm">Export</button>
+               </div>
+            </div>
+
+            <div class="db-container">
+               <table class="db-table">
+                  <thead>
+                    <tr>
+                      <th>Doc No.</th>
+                      <th>Ref/DO No.</th>
+                      <th>Category</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="db-body">
+                    <!-- DB records here -->
+                  </tbody>
+               </table>
+               <div id="db-pagination" class="pagination-container"></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <!-- Image Zoom Modal -->
+    <div id="zoom-modal" class="zoom-modal" onclick="this.style.display='none'">
+       <span class="zoom-close">&times;</span>
+       <img id="zoom-img" class="zoom-content">
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
